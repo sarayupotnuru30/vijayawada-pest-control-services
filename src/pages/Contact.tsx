@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Phone, Mail, MapPin, Clock, Send, MessageCircle } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import SectionHeading from "@/components/SectionHeading";
+import PageHeader from "@/components/PageHeader";
 import { useToast } from "@/hooks/use-toast";
 
 const contactInfo = [
@@ -11,48 +12,59 @@ const contactInfo = [
   { icon: Clock, label: "Hours", value: "24/7 Available" },
 ];
 
+const serviceOptions = [
+  "Termite Control",
+  "Cockroach Control",
+  "Bed Bugs Control",
+  "Rodent Control",
+  "Mosquito Control",
+  "Lizard Control",
+  "Spider Control",
+  "Ant Control",
+  "General Pest Control",
+  "Other",
+];
+
 const Contact = () => {
   const { toast } = useToast();
   const formAnim = useScrollAnimation();
-  const [form, setForm] = useState({ name: "", phone: "", email: "", message: "" });
+  const [form, setForm] = useState({ name: "", phone: "", email: "", service: "", message: "" });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     toast({ title: "Message Sent!", description: "We'll get back to you shortly." });
-    setForm({ name: "", phone: "", email: "", message: "" });
+    setForm({ name: "", phone: "", email: "", service: "", message: "" });
   };
 
   return (
     <>
-      <section className="pt-32 pb-16 gradient-dark">
-        <div className="container-main px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-secondary-foreground mb-4">Contact Us</h1>
-          <p className="text-secondary-foreground/70 max-w-2xl mx-auto">Get in touch for a free pest inspection</p>
-        </div>
-      </section>
+      <PageHeader title="Contact Us" subtitle="Get In Touch" />
 
       <section className="section-padding">
         <div className="container-main">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Info */}
             <div>
-              <SectionHeading subtitle="Get In Touch" title="We'd Love to Hear From You" center={false} />
+              <SectionHeading subtitle="Reach Out" title="We'd Love to Hear From You" center={false} />
               <div className="space-y-6 mb-8">
-                {contactInfo.map((c) => (
-                  <div key={c.label} className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-accent flex items-center justify-center shrink-0">
-                      <c.icon className="w-6 h-6 text-primary" />
+                {contactInfo.map((c, i) => {
+                  const { ref, isVisible } = useScrollAnimation();
+                  return (
+                    <div key={c.label} ref={ref} className={`group flex items-start gap-4 p-4 rounded-xl hover:bg-accent/50 transition-all duration-300 ${isVisible ? "animate-fade-up" : "opacity-0"}`} style={{ animationDelay: `${i * 100}ms` }}>
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-accent flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:from-primary group-hover:to-primary transition-all duration-500">
+                        <c.icon className="w-6 h-6 text-primary group-hover:text-primary-foreground transition-colors duration-500" />
+                      </div>
+                      <div>
+                        <span className="text-sm text-muted-foreground">{c.label}</span>
+                        {c.href ? (
+                          <a href={c.href} className="block font-semibold text-foreground hover:text-primary transition-colors">{c.value}</a>
+                        ) : (
+                          <p className="font-semibold text-foreground">{c.value}</p>
+                        )}
+                      </div>
                     </div>
-                    <div>
-                      <span className="text-sm text-muted-foreground">{c.label}</span>
-                      {c.href ? (
-                        <a href={c.href} className="block font-semibold text-foreground hover:text-primary transition-colors">{c.value}</a>
-                      ) : (
-                        <p className="font-semibold text-foreground">{c.value}</p>
-                      )}
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
               <a
                 href="https://wa.me/919985373922?text=Hi%2C%20I%20need%20pest%20control%20services%20in%20Vijayawada."
@@ -82,11 +94,20 @@ const Contact = () => {
                   </div>
                 </div>
                 <div>
+                  <label className="block text-sm font-medium text-foreground mb-1.5">Service Required *</label>
+                  <select required value={form.service} onChange={(e) => setForm({ ...form, service: e.target.value })} className="w-full px-4 py-3 rounded-lg border border-input bg-background text-foreground focus:ring-2 focus:ring-ring outline-none transition-all">
+                    <option value="">Select a service</option>
+                    {serviceOptions.map((s) => (
+                      <option key={s} value={s}>{s}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
                   <label className="block text-sm font-medium text-foreground mb-1.5">Message *</label>
                   <textarea required rows={4} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className="w-full px-4 py-3 rounded-lg border border-input bg-background text-foreground focus:ring-2 focus:ring-ring outline-none transition-all resize-none" placeholder="Describe your pest problem..." />
                 </div>
-                <button type="submit" className="btn-primary w-full gap-2">
-                  <Send className="w-5 h-5" /> Send Message
+                <button type="submit" className="btn-primary w-full gap-2 group">
+                  <Send className="w-5 h-5 group-hover:translate-x-1 transition-transform" /> Send Message
                 </button>
               </form>
             </div>

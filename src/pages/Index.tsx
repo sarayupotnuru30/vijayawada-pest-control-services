@@ -1,12 +1,18 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Shield, Bug, Leaf, Clock, Award, Users, Sparkles, Search, FileText, Wrench, PhoneCall, CheckCircle, Star, MessageCircle } from "lucide-react";
+import { Shield, Leaf, Clock, Award, Users, Sparkles, CheckCircle, Star, MessageCircle, Search, PhoneCall, ArrowRight } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import SectionHeading from "@/components/SectionHeading";
 import AnimatedCounter from "@/components/AnimatedCounter";
 import hero1 from "@/assets/hero-1.jpg";
 import hero2 from "@/assets/hero-2.jpg";
 import hero3 from "@/assets/hero-3.jpg";
+import serviceTermite from "@/assets/service-termite.jpg";
+import serviceCockroach from "@/assets/service-cockroach.jpg";
+import serviceBedbug from "@/assets/service-bedbug.jpg";
+import serviceRodent from "@/assets/service-rodent.jpg";
+import serviceMosquito from "@/assets/service-mosquito.jpg";
+import serviceGeneral from "@/assets/service-general.jpg";
 
 const slides = [
   { img: hero1, title: "No.1 Pest Control Services in Vijayawada", sub: "Safe, Effective & Long-Lasting Pest Solutions Since 2008" },
@@ -15,12 +21,12 @@ const slides = [
 ];
 
 const services = [
-  { icon: Bug, title: "Termite Control", desc: "Pre & post construction anti-termite treatments" },
-  { icon: Bug, title: "Cockroach Control", desc: "Eliminate cockroaches with safe gel treatments" },
-  { icon: Bug, title: "Bed Bugs Control", desc: "Advanced heat & chemical treatments" },
-  { icon: Bug, title: "Rodent Control", desc: "Professional rodent proofing & baiting" },
-  { icon: Bug, title: "Mosquito Control", desc: "Fogging & larvicidal treatments" },
-  { icon: Bug, title: "General Pest Control", desc: "Complete pest management solutions" },
+  { img: serviceTermite, title: "Termite Control", desc: "Pre & post construction anti-termite treatments" },
+  { img: serviceCockroach, title: "Cockroach Control", desc: "Eliminate cockroaches with safe gel treatments" },
+  { img: serviceBedbug, title: "Bed Bugs Control", desc: "Advanced heat & chemical treatments" },
+  { img: serviceRodent, title: "Rodent Control", desc: "Professional rodent proofing & baiting" },
+  { img: serviceMosquito, title: "Mosquito Control", desc: "Fogging & larvicidal treatments" },
+  { img: serviceGeneral, title: "General Pest Control", desc: "Complete pest management solutions" },
 ];
 
 const whyUs = [
@@ -32,11 +38,11 @@ const whyUs = [
   { icon: Sparkles, title: "18+ Years Experience", desc: "Trusted since 2008" },
 ];
 
-const process = [
-  { icon: Search, step: "01", title: "Inspection", desc: "Thorough property assessment" },
-  { icon: FileText, step: "02", title: "Treatment Plan", desc: "Customized solution design" },
-  { icon: Wrench, step: "03", title: "Execution", desc: "Professional treatment application" },
-  { icon: PhoneCall, step: "04", title: "Follow-up", desc: "Regular monitoring & support" },
+const processSteps = [
+  { step: "01", title: "Inspection", desc: "Thorough property assessment to identify pest problems", color: "from-blue-500 to-cyan-400" },
+  { step: "02", title: "Treatment Plan", desc: "Customized solution designed for your specific needs", color: "from-primary to-orange-400" },
+  { step: "03", title: "Execution", desc: "Professional treatment application by expert technicians", color: "from-emerald-500 to-teal-400" },
+  { step: "04", title: "Follow-up", desc: "Regular monitoring, support & warranty assurance", color: "from-violet-500 to-purple-400" },
 ];
 
 const testimonials = [
@@ -47,15 +53,20 @@ const testimonials = [
 
 const HeroSlider = () => {
   const [current, setCurrent] = useState(0);
+  const [direction, setDirection] = useState(1);
+
   useEffect(() => {
-    const t = setInterval(() => setCurrent((p) => (p + 1) % slides.length), 5000);
+    const t = setInterval(() => {
+      setDirection(1);
+      setCurrent((p) => (p + 1) % slides.length);
+    }, 5000);
     return () => clearInterval(t);
   }, []);
 
   return (
     <section className="relative h-screen min-h-[600px] overflow-hidden">
       {slides.map((s, i) => (
-        <div key={i} className={`absolute inset-0 transition-opacity duration-1000 ${i === current ? "opacity-100" : "opacity-0"}`}>
+        <div key={i} className={`absolute inset-0 transition-all duration-1000 ease-in-out ${i === current ? "opacity-100 scale-100" : "opacity-0 scale-110"}`}>
           <img src={s.img} alt={s.title} className="w-full h-full object-cover" width={1920} height={1080} />
           <div className="absolute inset-0 bg-gradient-to-r from-secondary/90 via-secondary/60 to-transparent" />
         </div>
@@ -63,18 +74,19 @@ const HeroSlider = () => {
       <div className="relative z-10 h-full flex items-center">
         <div className="container-main px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
-            <span className="inline-block px-4 py-1.5 rounded-full bg-primary/20 text-primary text-sm font-semibold mb-6 border border-primary/30">
-              Trusted Since 2008
+            <span className="inline-block px-4 py-1.5 rounded-full bg-primary/20 text-primary text-sm font-semibold mb-6 border border-primary/30 animate-fade-in" style={{ animationDelay: "0.2s" }}>
+              ⭐ Trusted Since 2008
             </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-secondary-foreground leading-tight mb-6">
+            <h1 key={current} className="text-4xl md:text-5xl lg:text-6xl font-bold text-secondary-foreground leading-tight mb-6 animate-fade-up">
               {slides[current].title}
             </h1>
-            <p className="text-lg text-secondary-foreground/80 mb-8 leading-relaxed">
+            <p key={`sub-${current}`} className="text-lg text-secondary-foreground/80 mb-8 leading-relaxed animate-fade-up" style={{ animationDelay: "0.15s" }}>
               {slides[current].sub}
             </p>
-            <div className="flex flex-wrap gap-4">
-              <Link to="/contact" className="btn-primary gap-2">
+            <div className="flex flex-wrap gap-4 animate-fade-up" style={{ animationDelay: "0.3s" }}>
+              <Link to="/contact" className="btn-primary gap-2 group">
                 <Search className="w-5 h-5" /> Get Free Inspection
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
               <a href="https://wa.me/919985373922?text=Hi%2C%20I%20need%20pest%20control%20services%20in%20Vijayawada." target="_blank" rel="noopener noreferrer" className="btn-whatsapp gap-2">
                 <MessageCircle className="w-5 h-5" /> Contact on WhatsApp
@@ -83,26 +95,30 @@ const HeroSlider = () => {
           </div>
         </div>
       </div>
-      {/* Dots */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex gap-3">
         {slides.map((_, i) => (
-          <button key={i} onClick={() => setCurrent(i)} className={`w-3 h-3 rounded-full transition-all duration-300 ${i === current ? "bg-primary w-8" : "bg-secondary-foreground/40"}`} />
+          <button key={i} onClick={() => setCurrent(i)} className={`h-3 rounded-full transition-all duration-500 ${i === current ? "bg-primary w-10" : "bg-secondary-foreground/40 w-3 hover:bg-secondary-foreground/60"}`} />
         ))}
       </div>
     </section>
   );
 };
 
-const ServiceCard = ({ icon: Icon, title, desc, delay }: { icon: typeof Bug; title: string; desc: string; delay: number }) => {
+const ServiceCard = ({ img, title, desc, delay }: { img: string; title: string; desc: string; delay: number }) => {
   const { ref, isVisible } = useScrollAnimation();
   return (
-    <div ref={ref} className={`glass-card-hover p-6 text-center ${isVisible ? "animate-fade-up" : "opacity-0"}`} style={{ animationDelay: `${delay}ms` }}>
-      <div className="w-14 h-14 rounded-xl gradient-primary flex items-center justify-center mx-auto mb-4">
-        <Icon className="w-7 h-7 text-primary-foreground" />
+    <div ref={ref} className={`group glass-card-hover overflow-hidden ${isVisible ? "animate-fade-up" : "opacity-0"}`} style={{ animationDelay: `${delay}ms` }}>
+      <div className="relative h-48 overflow-hidden">
+        <img src={img} alt={title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" width={640} height={512} />
+        <div className="absolute inset-0 bg-gradient-to-t from-secondary/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       </div>
-      <h3 className="text-lg font-bold text-foreground mb-2">{title}</h3>
-      <p className="text-sm text-muted-foreground">{desc}</p>
-      <Link to="/services" className="inline-block mt-4 text-sm font-semibold text-primary hover:underline">Learn More →</Link>
+      <div className="p-6 text-center">
+        <h3 className="text-lg font-bold text-foreground mb-2 group-hover:text-primary transition-colors">{title}</h3>
+        <p className="text-sm text-muted-foreground mb-4">{desc}</p>
+        <Link to="/services" className="inline-flex items-center gap-1 text-sm font-semibold text-primary hover:gap-2 transition-all">
+          Learn More <ArrowRight className="w-4 h-4" />
+        </Link>
+      </div>
     </div>
   );
 };
@@ -133,12 +149,12 @@ const Index = () => {
             {whyUs.map((item, i) => {
               const { ref, isVisible } = useScrollAnimation();
               return (
-                <div key={item.title} ref={ref} className={`flex items-start gap-4 p-6 glass-card-hover ${isVisible ? "animate-fade-up" : "opacity-0"}`} style={{ animationDelay: `${i * 100}ms` }}>
-                  <div className="w-12 h-12 rounded-lg bg-accent flex items-center justify-center shrink-0">
-                    <item.icon className="w-6 h-6 text-primary" />
+                <div key={item.title} ref={ref} className={`group flex items-start gap-4 p-6 glass-card-hover ${isVisible ? "animate-fade-up" : "opacity-0"}`} style={{ animationDelay: `${i * 100}ms` }}>
+                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary/20 to-accent flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:from-primary group-hover:to-primary transition-all duration-500">
+                    <item.icon className="w-7 h-7 text-primary group-hover:text-primary-foreground transition-colors duration-500" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-foreground mb-1">{item.title}</h3>
+                    <h3 className="font-bold text-foreground mb-1 group-hover:text-primary transition-colors">{item.title}</h3>
                     <p className="text-sm text-muted-foreground">{item.desc}</p>
                   </div>
                 </div>
@@ -148,21 +164,32 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Process */}
-      <section className="section-padding gradient-dark">
-        <div className="container-main">
-          <SectionHeading subtitle="Our Process" title="How We Work" description="A systematic approach to pest-free living" />
+      {/* Process - Redesigned */}
+      <section className="section-padding relative overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-violet-500/5 rounded-full blur-3xl" />
+        <div className="container-main relative z-10">
+          <SectionHeading subtitle="Our Process" title="How We Work" description="A systematic 4-step approach to pest-free living" />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {process.map((p, i) => {
+            {processSteps.map((p, i) => {
               const { ref, isVisible } = useScrollAnimation();
               return (
-                <div key={p.step} ref={ref} className={`text-center ${isVisible ? "animate-fade-up" : "opacity-0"}`} style={{ animationDelay: `${i * 150}ms` }}>
-                  <div className="text-5xl font-bold text-primary/20 mb-2">{p.step}</div>
-                  <div className="w-16 h-16 rounded-full gradient-primary flex items-center justify-center mx-auto mb-4">
-                    <p.icon className="w-7 h-7 text-primary-foreground" />
+                <div key={p.step} ref={ref} className={`group relative ${isVisible ? "animate-fade-up" : "opacity-0"}`} style={{ animationDelay: `${i * 150}ms` }}>
+                  <div className="relative bg-card rounded-2xl p-8 text-center border border-border/50 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-3">
+                    {/* Step number badge */}
+                    <div className={`absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-gradient-to-r ${p.color} flex items-center justify-center text-primary-foreground font-bold text-sm shadow-lg`}>
+                      {p.step}
+                    </div>
+                    {/* Connector line */}
+                    {i < processSteps.length - 1 && (
+                      <div className="hidden lg:block absolute top-1/2 -right-4 w-8 h-0.5 bg-gradient-to-r from-border to-transparent" />
+                    )}
+                    <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${p.color} flex items-center justify-center mx-auto mt-4 mb-5 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}>
+                      <span className="text-3xl font-bold text-primary-foreground">{p.step}</span>
+                    </div>
+                    <h3 className="text-lg font-bold text-foreground mb-2">{p.title}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{p.desc}</p>
                   </div>
-                  <h3 className="text-lg font-bold text-secondary-foreground mb-2">{p.title}</h3>
-                  <p className="text-sm text-secondary-foreground/70">{p.desc}</p>
                 </div>
               );
             })}
@@ -171,8 +198,9 @@ const Index = () => {
       </section>
 
       {/* Stats */}
-      <section className="section-padding bg-muted/30">
-        <div className="container-main">
+      <section className="section-padding gradient-primary relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,hsl(0_85%_60%/0.3),transparent_50%)]" />
+        <div className="container-main relative z-10">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             <AnimatedCounter end={18} suffix="+" label="Years Experience" />
             <AnimatedCounter end={1000} suffix="+" label="Happy Customers" />
@@ -188,13 +216,13 @@ const Index = () => {
           <SectionHeading subtitle="Testimonials" title="What Our Customers Say" />
           <div ref={testimonialAnim.ref} className={`grid grid-cols-1 md:grid-cols-3 gap-6 ${testimonialAnim.isVisible ? "animate-fade-up" : "opacity-0"}`}>
             {testimonials.map((t, i) => (
-              <div key={i} className="glass-card-hover p-8">
+              <div key={i} className="group glass-card-hover p-8 hover:border-primary/30 transition-all duration-500">
                 <div className="flex gap-1 mb-4">
-                  {Array.from({ length: t.rating }).map((_, j) => <Star key={j} className="w-5 h-5 fill-primary text-primary" />)}
+                  {Array.from({ length: t.rating }).map((_, j) => <Star key={j} className="w-5 h-5 fill-primary text-primary group-hover:scale-110 transition-transform" style={{ transitionDelay: `${j * 50}ms` }} />)}
                 </div>
-                <p className="text-muted-foreground mb-6 leading-relaxed">"{t.text}"</p>
+                <p className="text-muted-foreground mb-6 leading-relaxed italic">"{t.text}"</p>
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full gradient-primary flex items-center justify-center text-primary-foreground font-bold text-sm">
+                  <div className="w-12 h-12 rounded-full gradient-primary flex items-center justify-center text-primary-foreground font-bold text-sm shadow-lg">
                     {t.name[0]}
                   </div>
                   <span className="font-semibold text-foreground">{t.name}</span>
@@ -206,13 +234,17 @@ const Index = () => {
       </section>
 
       {/* CTA */}
-      <section className="section-padding gradient-primary">
-        <div ref={ctaAnim.ref} className={`container-main text-center ${ctaAnim.isVisible ? "animate-scale-in" : "opacity-0"}`}>
+      <section className="section-padding gradient-primary relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-1/4 w-64 h-64 bg-primary-foreground/10 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-0 right-1/4 w-48 h-48 bg-primary-foreground/5 rounded-full blur-2xl animate-pulse" style={{ animationDelay: "1s" }} />
+        </div>
+        <div ref={ctaAnim.ref} className={`container-main text-center relative z-10 ${ctaAnim.isVisible ? "animate-scale-in" : "opacity-0"}`}>
           <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">Book Your Free Pest Inspection Today</h2>
-          <p className="text-primary-foreground/80 mb-8 max-w-xl mx-auto">Get expert pest control solutions tailored to your needs. Call us now or schedule a free inspection.</p>
+          <p className="text-primary-foreground/80 mb-8 max-w-xl mx-auto">Get expert pest control solutions tailored to your needs.</p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link to="/contact" className="inline-flex items-center justify-center px-8 py-3.5 rounded-lg font-semibold bg-secondary text-secondary-foreground transition-all duration-300 hover:scale-105">
-              Schedule Inspection
+            <Link to="/contact" className="inline-flex items-center justify-center px-8 py-3.5 rounded-lg font-semibold bg-secondary text-secondary-foreground transition-all duration-300 hover:scale-105 hover:shadow-xl gap-2">
+              Schedule Inspection <ArrowRight className="w-5 h-5" />
             </Link>
             <a href="tel:9985373922" className="inline-flex items-center justify-center px-8 py-3.5 rounded-lg font-semibold border-2 border-primary-foreground text-primary-foreground transition-all duration-300 hover:bg-primary-foreground hover:text-primary gap-2">
               <PhoneCall className="w-5 h-5" /> Call 9985373922
@@ -223,10 +255,10 @@ const Index = () => {
 
       {/* Trust Badges */}
       <section className="py-12 bg-muted/30">
-        <div className="container-main flex flex-wrap justify-center items-center gap-8">
-          {["Registered Company", "ISO 9001:2015 Certified", "Eco-Friendly Products", "18+ Years Trusted"].map((b) => (
-            <div key={b} className="flex items-center gap-2 px-5 py-2.5 rounded-full border border-border bg-card">
-              <CheckCircle className="w-5 h-5 text-primary" />
+        <div className="container-main flex flex-wrap justify-center items-center gap-6">
+          {["Registered Company", "ISO 9001:2015 Certified", "Eco-Friendly Products", "18+ Years Trusted"].map((b, i) => (
+            <div key={b} className="flex items-center gap-2 px-5 py-2.5 rounded-full border border-border bg-card hover:border-primary/30 hover:shadow-md transition-all duration-300 group cursor-default">
+              <CheckCircle className="w-5 h-5 text-primary group-hover:scale-110 transition-transform" />
               <span className="text-sm font-semibold text-foreground">{b}</span>
             </div>
           ))}
