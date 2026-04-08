@@ -105,14 +105,24 @@ const About = () => {
         </div>
       </section>
 
-      {/* Stats */}
-      <section className="section-padding gradient-primary relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,hsl(0_85%_60%/0.3),transparent_50%)]" />
-        <div className="container-main grid grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
-          <AnimatedCounter end={18} suffix="+" label="Years Experience" />
-          <AnimatedCounter end={1000} suffix="+" label="Happy Customers" />
-          <AnimatedCounter end={24} suffix="/7" label="Support Available" />
-          <AnimatedCounter end={50} suffix="+" label="Expert Technicians" />
+      {/* Stats Section - Updated: Black Background, White Numbers & Labels */}
+      <section className="section-padding relative overflow-hidden" style={{ backgroundColor: "#000000" }}>
+        <div className="container-main relative z-10">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+            {/* Number and Label forced to white */}
+            <div style={{ color: "white" }}>
+              <AnimatedCounter end={18} suffix="+" label={<span style={{ color: "white" }}>Years Experience</span>} />
+            </div>
+            <div style={{ color: "white" }}>
+              <AnimatedCounter end={1000} suffix="+" label={<span style={{ color: "white" }}>Happy Customers</span>} />
+            </div>
+            <div style={{ color: "white" }}>
+              <AnimatedCounter end={24} suffix="/7" label={<span style={{ color: "white" }}>Support Available</span>} />
+            </div>
+            <div style={{ color: "white" }}>
+              <AnimatedCounter end={50} suffix="+" label={<span style={{ color: "white" }}>Expert Technicians</span>} />
+            </div>
+          </div>
         </div>
       </section>
     </>

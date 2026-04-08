@@ -118,8 +118,13 @@ const Contact = () => {
       {/* Map */}
       <section className="h-[400px]">
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3825.123!2d80.6288!3d16.5062!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTbCsDMwJzIyLjMiTiA4MMKwMzcnNDMuNyJF!5e0!3m2!1sen!2sin!4v1600000000000"
-          width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3825.293345474441!2d80.62725807590497!3d16.511261327438495!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a35f0022419ba27%3A0xc0c8e2a3922f254e!2s24-10-29%2C%201st%20Ln%2C%20Bavajipet%2C%20Vijayawada%2C%20Andhra%20Pradesh%20520003!5e0!3m2!1sen!2sin!4v1712600000000!5m2!1sen!2sin"
+          width="100%" 
+          height="100%" 
+          style={{ border: 0 }} 
+          allowFullScreen 
+          loading="lazy" 
+          referrerPolicy="no-referrer-when-downgrade"
           title="Vijayawada Pest Control Services Location"
         />
       </section>
