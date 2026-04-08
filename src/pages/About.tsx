@@ -114,13 +114,13 @@ const About = () => {
               <AnimatedCounter end={18} suffix="+" label={<span style={{ color: "white" }}>Years Experience</span>} />
             </div>
             <div style={{ color: "white" }}>
-              <AnimatedCounter end={1000} suffix="+" label={<span style={{ color: "white" }}>Happy Customers</span>} />
+              <AnimatedCounter end={5000} suffix="+" label={<span style={{ color: "white" }}>Happy Customers</span>} />
             </div>
             <div style={{ color: "white" }}>
               <AnimatedCounter end={24} suffix="/7" label={<span style={{ color: "white" }}>Support Available</span>} />
             </div>
             <div style={{ color: "white" }}>
-              <AnimatedCounter end={50} suffix="+" label={<span style={{ color: "white" }}>Expert Technicians</span>} />
+              <AnimatedCounter end={50} suffix="+" label={<span style={{ color: "white" }}>AMC</span>} />
             </div>
           </div>
         </div>
