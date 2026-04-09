@@ -133,6 +133,15 @@
 // };
 
 // export default Contact;
+
+
+
+
+
+
+
+
+
 import { useState } from "react";
 import { Phone, Mail, MapPin, Clock, Send, MessageCircle } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
@@ -259,3 +268,12 @@ const Contact = () => {
 };
 
 export default Contact;
+
+
+
+
+
+
+
+
+
